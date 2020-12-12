@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { text } from "./data";
+import "./App.css";
 
 function App() {
+  const [paragraphs, setParagraphs] = useState([]);
+  const [number, setNumber] = useState(0);
+  const generateParagraph = () => {
+    if (number < 0) {
+      setParagraphs(text.slice(0, 1));
+    } else if (number > text.length) {
+      setParagraphs(text.slice(0, text.length));
+    } else setParagraphs(text.slice(0, number));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="center divColor">
+      <div className="mesi">
+        <h1>Paragraph generator</h1>
+        <label for="paragraph">Paragraphs</label>
+        {"   "}
+        <input
+          type="number"
+          value={number}
+          onChange={(e) => {
+            setNumber(e.target.value);
+          }}
+        />
+        {"      "}
+        {"   "}
+        <button onClick={generateParagraph}>Generate</button>
+      </div>
+      <br></br>
+      <br></br>
+      <p>
+        {paragraphs.map((element, index) => {
+          return <p>{element}</p>;
+        })}
+      </p>
     </div>
   );
 }
